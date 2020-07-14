@@ -1,0 +1,110 @@
+﻿@model JobFinder.Models.ViewModels.Admin.ChartViewModel
+
+@{
+    ViewData["Title"] = "Dashboard";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+    <div class="administration-area">
+        <h2>Administration area</h2>
+
+        @if (User.IsInRole("hr"))
+        {
+            <p class="statistic-info">Total job listings posted on platform: @Model.NumberOfJobListings</p>
+            <p class="statistic-info">Job listings active: @Model.NumberOfJobListingsActive</p>
+            <p class="statistic-info">Applications received: @Model.NumberOfApplicationsReceived</p>
+        }
+
+        @if (User.IsInRole("admin"))
+        {
+            <div class="chart-area">
+                <div style="width: 400px; height: 400px">
+                    <h2>Popular job industries by no. of applications (TOP 5)</h2>
+                    <canvas id="job-industry-doughnut" class="chartjs" style="margin-bottom: 10rem;"></canvas>
+                </div>
+
+                <div style="width: 400px; height: 400px">
+                    <h2>Most desired companies by no. of applications (TOP 5)</h2>
+                    <canvas id="desired-companies-doughnut" class="chartjs" style="margin-bottom: 10rem;"></canvas>
+                </div>
+            </div>
+        }
+
+        @if (User.IsInRole("admin"))
+        {
+            <a class="administration-navigation-item" asp-controller="Categories" asp-action="Index">Categories</a>
+            <a class="administration-navigation-item" asp-controller="Companies" asp-action="Index">Companies</a>
+            <a class="administration-navigation-item" asp-controller="JobFinderUsers" asp-action="Index">Users</a>
+            <a class="administration-navigation-item" asp-controller="CompanyUsers" asp-action="Index">Companies users</a>
+        }
+        @if (User.IsInRole("hr"))
+        {
+            <a class="administration-navigation-item" asp-controller="JobListings" asp-action="Index">Job Listings</a>
+            <a class="administration-navigation-item" asp-controller="Applications" asp-action="Index">Applications</a>
+        }
+    </div>
+
+@section Scripts {
+
+    <script src="~/js/Chart.js"></script>
+    @if (User.IsInRole("admin"))
+    {
+        <!-- variables storing the category names, its number of appliances and generating random background colors-->
+        List<string> categoryNames = new List<string>();
+        List<int> noOfAppliancesToCategory = new List<int>();
+        List<string> backgroundColorsForCategoryChart = new List<string>();
+
+        foreach (var item in Model.CategoryChartData)
+        {
+
+            categoryNames.Add(item.CategoryName);
+            noOfAppliancesToCategory.Add(item.CategoryCount);
+
+            Random random = new Random();
+
+            backgroundColorsForCategoryChart.Add($"rgb({random.Next(255)},{random.Next(255)},{random.Next(255)})");
+        }
+
+        <!-- variables storing the company names, its number of appliances and generating random background colors-->
+        List<string> companyNames = new List<string>();
+        List<int> noOfAppliancesToCompany = new List<int>();
+        List<string> backgroundColorsForCompanyChart = new List<string>();
+
+        foreach (var item in Model.CompanyChartData)
+        {
+            companyNames.Add(item.CompanyName);
+            noOfAppliancesToCompany.Add(item.CompanyCount);
+
+            Random random = new Random();
+
+            backgroundColorsForCompanyChart.Add($"rgb({random.Next(255)},{random.Next(255)},{random.Next(255)})");
+        }
+        <script>
+        var popular_job_industries = new Chart(document.getElementById("job-industry-doughnut"),
+            {
+                "type": "doughnut",
+                "data": {
+                    "labels": @Html.Raw(Json.Serialize(categoryNames)),
+                    "datasets": [
+                        {
+                            "label": "Popular job industries",
+                            "data": @Html.Raw(Json.Serialize(noOfAppliancesToCategory)),
+                            "backgroundColor": @Html.Raw(Json.Serialize(backgroundColorsForCategoryChart))
+                        }]
+                }
+            });
+        var most_desired_companies = new Chart(document.getElementById("desired-companies-doughnut"),
+            {
+                "type": "doughnut",
+                "data": {
+                    "labels": @Html.Raw(Json.Serialize(companyNames)),
+                    "datasets": [
+                        {
+                            "label": "Most desired companies",
+                            "data": @Html.Raw(Json.Serialize(noOfAppliancesToCompany)),
+                            "backgroundColor": @Html.Raw(Json.Serialize(backgroundColorsForCompanyChart))
+                        }]
+                }
+            });
+        </script>
+    }
+}

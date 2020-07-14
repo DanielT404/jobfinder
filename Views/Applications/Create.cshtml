@@ -1,0 +1,101 @@
+﻿@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="jobs-crud">
+        <h2>Submit your application</h2>
+        <form asp-action="Create">
+            <input type="hidden" name="JobListingId" value="@ViewData["JobId"]"/>
+            @{
+                if ((byte)ViewData["showWorkExperienceFields"] == 1)
+                {
+                    <div class="subfield-title">Your most recent Work Experience</div>
+                    <div class="form-jobs-group">
+                        <label class="control-label">Company Name</label>
+                        <input class="form-control" name="workExpCompanyName" placeholder="Enter previous or current company name..."required/>
+                    </div>
+                    <div class="form-jobs-group">
+                        <label class="control-label">Start Date</label>
+                        <input type="date" class="form-control" name="workExpStartDate" required/>
+                    </div>
+                    <div class="form-jobs-group">
+                        <label class="control-label">End Date</label>
+                        <input type="date" class="form-control" name="workExpEndDate" required/>
+                    </div>
+                    <div class="form-jobs-group">
+                        <label class="control-label">Position</label>
+                        <input class="form-control" name="workExpPosition" placeholder="Enter position held in the company..."required/>
+                    </div>
+                    <div class="form-jobs-group">
+                        <label class="control-label">Responsibilities</label>
+                        <textarea class="form-control" name="workExpResponsibilities" rows="10" 
+                                  placeholder="Enter brief responsibilites on the position, using words such as accomplished, achieved, acquired,competed, compiled, conceived, consolidated,established, expedited, evaluated, increased, initiated, investigated,provided, published,represented,obtained,volunteered..." required></textarea>
+                    </div>
+                    <div class="form-jobs-group">
+                        <label class="control-label">Duties</label>
+                        <textarea class="form-control" name="workExpDuties" rows="10" required placeholder="Enter brief duties on the position..."></textarea>
+                    </div>
+                }
+            }
+            @{
+                if ((byte)ViewData["showEducationFields"] == 1)
+                {
+                    <div class="subfield-title">Your highest Educational level to date</div>
+                    <div class="form-jobs-group">
+                        <label class="control-label">School Name</label>
+                        <input class="form-control" name="schoolName" placeholder="Enter the university/college/institution/school name..." required/>
+                    </div>
+                    <div class="form-jobs-group">
+                        <label class="control-label">Start Date</label>
+                        <input type="date" class="form-control" name="educationStartDate" required/>
+                    </div>
+                    <div class="form-jobs-group">
+                        <label class="control-label">End Date</label>
+                        <input type="date" class="form-control" name="educationEndDate" required/>
+                    </div>
+                    <div class="form-jobs-group">
+                        <label class="control-label">Degree</label>
+                        <input class="form-control" name="educationDegree" placeholder="Enter the degree/diploma/calification obtained..." required/>
+                    </div>
+                }
+            }
+            @{
+                if ((byte)ViewData["showSkillsFields"] == 1)
+                {
+                    <div class="subfield-title">Your most valuable skill for the current job listing</div>
+                    <div class="form-jobs-group">
+                        <label class="control-label">Skill</label>
+                        <input class="form-control" name="skillName" placeholder="Enter your skill" required/>
+                    </div>
+                    <div class="form-jobs-group">
+                        <label class="control-label">Skill Rating (from 1 to 5)</label>
+                        <input type="number" min="1" max="5" class="form-control" value="1" name="skillRating" required/>
+                    </div>
+                    <div class="form-jobs-group">
+                        <label class="control-label">Description (optional)</label>
+                        <input class="form-control" name="skillDescription" placeholder="Enter any description related to the said skill if needed..."/>
+                    </div>
+                }
+            }
+            @{
+                if ((byte)ViewData["showOtherNotes"] == 1)
+                {
+                    <div class="subfield-title">Other mentions you would like to make.</div>
+                    <div class="form-jobs-group">
+                        <textarea name="otherNotes" rows="10" placeholder="Enter anyother mentions you would like the HR to see..."></textarea>
+                    </div>
+                }
+            }
+            <div class="form-group">
+                <input type="submit" value="Send application" class="btn btn-primary" />
+            </div>
+            <div>
+                <a class="btl-anchor" asp-controller="Jobs" asp-action="Details" asp-route-id="@ViewData["JobId"]">Back to List</a>
+            </div>
+        </form>
+    </div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

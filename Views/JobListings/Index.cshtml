@@ -1,0 +1,84 @@
+﻿@model IEnumerable<JobFinder.Models.JobListing>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="read-section">
+        <h1>Your job listings opened in application</h1>
+
+        <p>
+            <a asp-action="Create">Add new job listing to application</a>
+        </p>
+        @{
+            if (TempData["templateExists"] != null)
+            {
+                <div class="error-message">
+                    @TempData["templateExists"] !
+                </div>
+            }
+        }
+        <div>
+            <a class="btl-anchor" asp-action="Index" asp-controller="Dashboard">Back to dashboard</a>
+        </div>
+
+        @if (Model.Count() > 0)
+        {
+            <div class="cards cards-joblistings">
+                @foreach (var item in Model)
+                {
+                    <div class="card card-joblistings">
+                        <div class="card-title">
+                            Job Listing Title:
+                            @Html.DisplayFor(modelItem => item.Title)
+                        </div>
+                        <div class="card-title">
+                            Job Listing Position:
+                            @Html.DisplayFor(modelItem => item.Position)
+                        </div>
+                        <div class="card-description">
+                            Job Listing Location:
+                            @Html.DisplayFor(modelItem => item.Location)
+                        </div>
+                        <div class="card-description">
+                            Job Listing Region:
+                            @Html.DisplayFor(modelItem => item.Region)
+                        </div>
+                        <div class="card-description">
+                            Job Listing Type:
+                            @Html.DisplayFor(modelItem => item.Type)
+                        </div>
+                        <div class="card-description">
+                            Job Listing Description:
+                            <div class="job-description">
+                                @Html.Raw("<pre>" + Html.Encode(item.Description) + "</pre>")
+                            </div>
+                        </div>
+                        <div class="card-description">
+                            Job Listing Added At:
+                            @Html.DisplayFor(modelItem => item.JobListingAddedAt)
+                        </div>
+                        <div class="card-description">
+                            Job Listing Category:
+                            @Html.DisplayFor(modelItem => item.Category.Name)
+                        </div>
+                        <div class="card-description">
+                            Job Listing For:
+                            @Html.DisplayFor(modelItem => item.Company.Name)
+                        </div>
+
+                        <div class="card-actions">
+                            <a asp-action="ViewApplications" asp-route-id="@item.JobListingId">View applications</a> |
+                            <a asp-action="Edit" asp-route-id="@item.JobListingId">Edit</a> |
+                            <a asp-action="Delete" asp-route-id="@item.JobListingId">Delete</a>
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p class="no-entries__message">You have no job listings posted yet.</p>
+        }
+    </div>

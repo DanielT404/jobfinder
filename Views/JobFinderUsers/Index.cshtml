@@ -1,0 +1,127 @@
+﻿@model IEnumerable<JobFinder.Models.JobFinderUser>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+@if (ViewBag.SuccessMessage != null)
+{
+    <div class="success-message">
+        @ViewBag.SuccessMessage
+    </div>
+}
+@if (ViewBag.InfoMessage != null)
+{
+    <div class="info-message">
+        @ViewBag.InfoMessage
+    </div>
+}
+
+<div class="read-section">
+    <h1>Current users</h1>
+
+    <p>
+        <a asp-action="Create">Add new user to application</a>
+    </p>
+    <div>
+        <a class="btl-anchor" asp-action="Index" asp-controller="Dashboard">Back to dashboard</a>
+    </div>
+    @{
+        if (Model.Count() > 0)
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            @Html.DisplayNameFor(model => model.FirstName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.LastName)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.Email)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.PhoneNumber)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.UserRole)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.UserAddedAt)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.UserUpdatedAt)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.IsApproved)
+                        </th>
+                        <th>
+                            @Html.DisplayNameFor(model => model.IsActive)
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.FirstName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.LastName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.PhoneNumber)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UserRole.RoleName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UserAddedAt)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.UserUpdatedAt)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IsApproved)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.IsActive)
+                            </td>
+                            <td>
+                                @if (item.IsApproved == false && item.UserRole.RoleName == "hr")
+                                {
+                                    <a asp-action="Approve" asp-route-id="@item.UserId">Approve</a><span> |</span>
+                                }
+                                @if (item.IsApproved == true && item.UserRole.RoleName == "hr")
+                                {
+                                    <a asp-action="Unapprove" asp-route-id="@item.UserId">Unapprove</a><span> |</span>
+                                }
+                                <a asp-action="Edit" asp-route-id="@item.UserId">Edit</a> |
+                                @if (item.IsActive == true)
+                                {
+                                    <a asp-action="Delete" asp-route-id="@item.UserId">Disable</a>
+                                }
+                                else
+                                {
+                                    <a asp-action="UndoDelete" asp-route-id="@item.UserId">Enable</a>
+
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else
+        {
+            <p class="no-entries__message">There are no users registered in application.</p>
+        }
+    }
+</div>

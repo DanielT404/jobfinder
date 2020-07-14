@@ -1,0 +1,45 @@
+﻿.nav__active {
+    border-bottom: 4px solid #5fa1b6;
+}
+
+.light-gray-bg {
+    background-color: #343333;
+}
+
+.dark-gray-bg {
+    background-color: #2d2d2d;
+}
+
+.text-align-left {
+    text-align: left;
+}
+
+.message {
+    margin-top: 5rem;
+    text-align: center;
+    background: #b54545;
+    width: 500px;
+    padding: 1.1rem;
+    margin: 5rem auto;
+    font-size: 0.8rem;
+}
+
+.success-message {
+    margin-top: 5rem;
+    text-align: center;
+    background: #3c582e;
+    width: 500px;
+    padding: 1.1rem;
+    margin: 5rem auto;
+    font-size: 0.8rem;
+}
+
+.info-message {
+    margin-top: 5rem;
+    text-align: center;
+    background: #7b2020;
+    width: 500px;
+    padding: 1.1rem;
+    margin: 5rem auto;
+    font-size: 0.8rem;
+}

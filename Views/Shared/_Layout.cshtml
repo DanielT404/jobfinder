@@ -1,0 +1,116 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - JobFinder</title>
+    <link rel="stylesheet" href="~/css/utils.css" />
+    <link rel="stylesheet" href="~/css/site.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Sans:wght@300;400;600;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="~/css/Chart.css" />
+</head>
+<body>
+    <header class="header">
+        <div class="header__content">
+            <div class="logo">
+                <h2><a asp-controller="StaticPages" asp-action="Index">JobFinder</a></h2>
+            </div>
+            @{
+                if (User.Identity.IsAuthenticated && (User.IsInRole("admin") || User.IsInRole("hr")))
+                {
+                    <div class="admin-pane">
+                        <ul class="admin-pane__operations">
+                            <li class="operations__item">
+                                @if (ViewBag.SelectedNav == "Dashboard")
+                                {
+                                    <a asp-controller="Dashboard" asp-action="Index" class="operations__item--anchor nav__active">Dashboard</a>
+                                }
+                                else
+                                {
+                                    <a asp-controller="Dashboard" asp-action="Index" class="operations__item--anchor">Dashboard</a>
+                                }
+                            </li>
+                        </ul>
+                    </div>
+                }
+            }
+            <nav class="nav">
+                <div class="nav__nav--left">
+                    <ul>
+                        @{
+                            if (ViewBag.SelectedNav == "Home")
+                            {
+                                <li><a asp-controller="StaticPages" asp-action="Index" class="nav__item nav__active">Home</a></li>
+                                <li><a asp-controller="Jobs" asp-action="Index" class="nav__item">Jobs</a></li>
+                            }
+                            if (ViewBag.SelectedNav == "Jobs")
+                            {
+                                <li><a asp-controller="StaticPages" asp-action="Index" class="nav__item">Home</a></li>
+                                <li><a asp-controller="Jobs" asp-action="Index" class="nav__item nav__active">Jobs</a></li>
+                            }
+                            if (ViewBag.SelectedNav == "Dashboard")
+                            {
+                                <li><a asp-controller="StaticPages" asp-action="Index" class="nav__item">Home</a></li>
+                                <li><a asp-controller="Jobs" asp-action="Index" class="nav__item">Jobs</a></li>
+                            }
+                            if (ViewBag.SelectedNav == "Profile")
+                            {
+                                <li><a asp-controller="StaticPages" asp-action="Index" class="nav__item">Home</a></li>
+                                <li><a asp-controller="Jobs" asp-action="Index" class="nav__item">Jobs</a></li>
+                            }
+                        }
+                    </ul>
+                </div>
+                <div class="nav__nav--right">
+                    <ul>
+
+                        @{
+                            if (User.Identity.IsAuthenticated)
+                            {
+                                <li><a href="#">@User.Identity.Name</a></li>
+
+                                if (ViewBag.SelectedNav == "Profile")
+                                {
+                                    <li><a asp-controller="AccountManager" asp-action="Profile" class="nav__item nav__active">My Profile</a></li>
+                                    <li><a asp-controller="AccountManager" asp-action="Logout">Logout</a></li>
+                                }
+                                else
+                                {
+                                    <li><a asp-controller="AccountManager" asp-action="Profile">My Profile</a></li>
+                                    <li><a asp-controller="AccountManager" asp-action="Logout">Logout</a></li>
+                                }
+                            }
+                            else
+                            {
+                                if (ViewBag.SelectedNav == "Login")
+                                {
+                                    <li><a asp-controller="AccountManager" asp-action="Login" class="nav__item nav__active">Login</a></li>
+                                    <li><a asp-controller="AccountManager" asp-action="Register">Register</a></li>
+                                }
+                                else if (ViewBag.SelectedNav == "Register")
+                                {
+                                    <li><a asp-controller="AccountManager" asp-action="Login">Login</a></li>
+                                    <li><a asp-controller="AccountManager" asp-action="Register" class="nav__item nav__active">Register</a></li>
+                                }
+                                else
+                                {
+                                    <li><a asp-controller="AccountManager" asp-action="Login">Login</a></li>
+                                    <li><a asp-controller="AccountManager" asp-action="Register">Register</a></li>
+                                }
+                            }
+                        }
+                    </ul>
+                </div>
+            </nav>
+        </div>
+    </header>
+    <section class="section">
+        @RenderBody()
+    </section>
+
+    <footer class="footer">
+        <p>Made with ❤️ by Țună Daniel-Florin-Damian</p>
+    </footer>
+    @RenderSection("Scripts", required: false)
+</body>
+</html>

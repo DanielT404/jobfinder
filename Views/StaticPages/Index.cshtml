@@ -1,0 +1,84 @@
+﻿@model List<Category>
+
+@{
+    ViewData["Title"] = "Home";
+}
+@if (ViewBag.Message != null)
+{
+    <div class="message">@ViewBag.Message</div>
+}
+
+<div class="main-action">
+    <div class="popular-jobs-section">
+        <h1>Job categories</h1>
+        <div class="job-grid">
+            @{
+                int i = 0;
+            }
+            <div class="job-grid__row">
+                @foreach (var item in Model)
+                {
+                    if (i % 2 == 0)
+                    {
+                        <div class="job-grid__item light-gray-bg">
+                            <a href="/jobs/category/@item.Slug">@item.Name</a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="job-grid__item dark-gray-bg">
+                            <a href="/jobs/category/@item.Slug">@item.Name</a>
+                        </div>
+                    }
+                    i++;
+                }
+            </div>
+        </div>
+        <div class="cta-section">
+            <h2 class="cta-section__title">Over 2,000 available jobs. What are you waiting for?</h2>
+            <a class="btn btn-cta" href="/jobs">Find more</a>
+        </div>
+    </div>
+</div>
+<div class="our-mission" id="mission">
+    <div class="our-mission__content">
+        <h2>Our mission</h2>
+        <p>
+            Our primary goal with JobFinder is to make the hiring process easier, both for the companies and for the applicants. <br />
+            JobFinder uses built-in application templates, fully customizable by the companies for each of their job listing, allowing them to suit their current workforce needs.
+            Candidates should no longer feel that their application went “unnoticed”; all candidates for a specific job listing use the same defined-template
+            while applying, the fields from the template are all of value for the company, therefore it is both in the interest of the company to read
+            each application and at the same time, in the interest of the candidate to focus more on the job application and do his best,
+            by limiting its’ time spent writing information that would not even be seen by the HR.<br />
+
+            No more waiting. Get in touch.
+        </p>
+    </div>
+</div>
+<div class="contact-us" id="contact">
+    <div class="contact-us__content">
+        <h2>Contact Us</h2>
+        <p>Have you faced any difficulties in using this platform? Are you a company interested to try our platform? Do you have any questions for us? We would love to hear them! Don't be shy, we would like to assist you!</p>
+        <div class="contact-us__form">
+            <form asp-action="sendEmail">
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" name="name" placeholder="Enter your name..." required />
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" name="email" placeholder="Enter your email address..." required />
+                </div>
+                <div class="form-group">
+                    <label for="message">Message:</label>
+                    <textarea rows="3" cols="20" name="message" placeholder="Enter your message..." required></textarea>
+                </div>
+                <button type="submit" class="btn btn-cta">Send</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/site.js"></script>
+}

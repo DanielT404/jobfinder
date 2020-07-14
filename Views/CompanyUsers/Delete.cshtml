@@ -1,0 +1,16 @@
+﻿@model JobFinder.Models.CompanyUser
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="delete-section">
+    <h1>Are you sure you want to unassign "@Model.JobFinderUser.Email" from company "@Model.Company.Name" ?</h1>
+
+    <form asp-action="Delete">
+        <input type="hidden" asp-for="UserId" />
+        <input type="submit" value="Unassign" class="btn btn-danger" /> |
+        <a asp-action="Index">Back to List</a>
+    </form>
+</div>

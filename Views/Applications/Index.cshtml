@@ -1,0 +1,60 @@
+﻿@model List<Application>
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+    <div class="profile">
+        <h2>Job applications received</h2>
+        <div>
+            <a class="btl-anchor" asp-action="Index" asp-controller="Dashboard">Back to dashboard</a>
+        </div>
+        @{
+            if (Model.Count() > 0)
+            {
+                <div class="cards">
+                    @foreach (var item in Model)
+                    {
+                        <div class="card">
+                            <div class="card-title">
+                                @Html.DisplayFor(modelItem => item.JobListing.Title)
+                            </div>
+                            <div class="card-title">
+                                @Html.DisplayFor(modelItem => item.JobListing.Position)
+                            </div>
+                            <div class="card-description">
+                                @Html.DisplayFor(modelItem => item.JobListing.Type)
+                            </div>
+                            <div class="card-description">
+                                @Html.DisplayFor(modelItem => item.JobListing.Region), @Html.DisplayFor(modelItem => item.JobListing.Location)
+                            </div>
+                            <div class="card-description">
+                                @Html.DisplayFor(modelItem => item.JobListing.Company.Name)
+                            </div>
+                            <div class="card-description">
+                                @Html.DisplayFor(modelItem => item.JobListing.Category.Name)
+                            </div>
+                            <div class="card-description">
+                                @Html.DisplayFor(modelItem => item.ApplicationWrittenAt)
+                            </div>
+                            <div class="card-description">
+                                by @Html.DisplayFor(modelItem => item.JobFinderUser.LastName) @Html.DisplayFor(modelItem => item.JobFinderUser.FirstName)
+                            </div>
+                            <div class="card-description">
+                                @Html.DisplayFor(modelItem => item.Status)
+                            </div>
+
+                            <div class="card-actions">
+                                <a asp-action="Details" asp-route-applicationId="@item.ApplicationId">View</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <p class="no-entries__message">Unfortunately, you haven't received any job applications.</p>
+            }
+        }
+    </div>

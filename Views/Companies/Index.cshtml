@@ -1,0 +1,50 @@
+﻿@model IEnumerable<JobFinder.Models.Company>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="read-section">
+        @if (ViewBag.ErrorMessage != null)
+        {
+            <div class="message">
+                @ViewBag.ErrorMessage
+            </div>
+        }
+        <h1>Current companies registered in application</h1>
+
+        <p>
+            <a asp-action="Create">Add new company to application</a>
+        </p>
+        <div>
+            <a class="btl-anchor" asp-action="Index" asp-controller="Dashboard">Back to dashboard</a>
+        </div>
+        @{
+            if (Model.Count() > 0)
+            {
+                <div class="cards">
+                    @foreach (var item in Model)
+                    {
+                        <div class="card">
+                            <div class="card-title">
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </div>
+                            <div class="card-description">
+                                @Html.DisplayFor(modelItem => item.Description)
+                                @Html.DisplayFor(modelItem => item.StartDate)
+                            </div>
+                            <div class="card-actions">
+                                <a asp-action="Edit" asp-route-id="@item.CompanyId">Edit</a> |
+                                <a asp-action="Delete" asp-route-id="@item.CompanyId">Delete</a>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <p class="no-entries__message">Unfortunately, there are no companies registered in application. Why wouldn't you add one?</p>
+            }
+        }
+    </div>

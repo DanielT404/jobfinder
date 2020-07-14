@@ -1,0 +1,153 @@
+﻿@model JobFinder.Models.ViewModels.Admin.ViewApplicationViewModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="read-section">
+    <div class="job-overview">
+        <div>
+            <h3 class="subfield-title">Job listing overview</h3>
+            <div class="job-group">
+                <h4 class="job-company">Company: @Html.DisplayFor(model => model.Application.JobListing.Company.Name)</h4>
+            </div>
+            <div class="job-group">
+                <h4 class="job-category">Category: @Html.DisplayFor(model => model.Application.JobListing.Category.Name), @Html.DisplayFor(model => model.Application.JobListing.Type)</h4>
+            </div>
+            <div class="job-group">
+                <h4 class="job-title">Title: @Html.DisplayFor(model => model.Application.JobListing.Title)</h4>
+            </div>
+            <div class="job-group">
+                <h4 class="job-position">Position: @Html.DisplayFor(model => model.Application.JobListing.Position)</h4>
+            </div>
+            <div class="job-group">
+                <h4 class="job-metadata">Region: @Html.DisplayFor(model => model.Application.JobListing.Region)</h4>
+            </div>
+            <div class="job-group">
+                <h4 class="job-metadata">Location: @Html.DisplayFor(model => model.Application.JobListing.Location)</h4>
+            </div>
+        </div>
+        <div>
+            <h3 class="subfield-title">Candidate information</h3>
+            <div class="job-group">
+                <h4 class="user-data--header">Full name: @Html.DisplayFor(model => model.Application.JobFinderUser.LastName) @Html.DisplayFor(model => model.Application.JobFinderUser.FirstName)</h4>
+            </div>
+            <div class="job-group">
+                <h4 class="user-data--contact">Email address: @Html.DisplayFor(model => model.Application.JobFinderUser.Email)</h4>
+            </div>
+            <div class="job-group">
+                <h4 class="user-data--contact">Phone number: @Html.DisplayFor(model => model.Application.JobFinderUser.PhoneNumber)</h4>
+            </div>
+        </div>
+        <div>
+            <h3 class="subfield-title">Application data</h3>
+            @{
+                if (Model.ApplicationEducation != null)
+                {
+                    <div>
+                        <h3 class="subfield--subfield">Highest educational level</h3>
+                        <div class="job-group">
+                            <h4 class="subfield--title">School name: @Html.DisplayFor(model => model.ApplicationEducation.SchoolName)</h4>
+                        </div>
+                        <div class="job-group">
+                            <h4 class="subfield--subtitle">Degree/diploma: @Html.DisplayFor(model => model.ApplicationEducation.Degree)</h4>
+                        </div>
+                        <div class="job-group">
+                            <h4 class="subfield--date">Start date: @Html.DisplayFor(model => model.ApplicationEducation.StartDate)</h4>
+                        </div>
+                        <div class="job-group">
+                            <h4 class="subfield--date">End date: @Html.DisplayFor(model => model.ApplicationEducation.EndDate)</h4>
+                        </div>
+                    </div>
+                }
+                if (Model.ApplicationWorkExperience != null)
+                {
+        <div>
+            <h3 class="subfield--subfield">Latest work experience</h3>
+            <div class="job-group">
+                <h4 class="subfield--title">Company name: @Html.DisplayFor(model => model.ApplicationWorkExperience.CompanyName)</h4>
+            </div>
+            <div class="job-group">
+                <h4 class="subfield--subtitle">Position: @Html.DisplayFor(model => model.ApplicationWorkExperience.Position)</h4>
+            </div>
+            <div class="job-group">
+                <h4 class="subfield--date">Start date: @Html.DisplayFor(model => model.ApplicationWorkExperience.StartDate)</h4>
+            </div>
+            <div class="job-group">
+                <h4 class="subfield--date">End date: @Html.DisplayFor(model => model.ApplicationWorkExperience.EndDate)</h4>
+            </div>
+            <div class="job-group">
+                <h4 class="job-description">Responsibilities: @Html.Raw("<pre>" + Html.Encode(Model.ApplicationWorkExperience.Responsibilities) + "</pre>")</h4>
+            </div>
+            <div class="job-group">
+                <h4 class="job-description">Duties: @Html.Raw("<pre>" + Html.Encode(Model.ApplicationWorkExperience.Duties) + "</pre>")</h4>
+            </div>
+
+        </div>
+                }
+                if (Model.ApplicationSkill != null)
+                {
+                    <div>
+                        <h3 class="subfield--subfield">The most valuable skill to the given job listing</h3>
+                        <div class="job-group">
+                            <h4 class="subfield--title">Skill: @Html.DisplayFor(model => model.ApplicationSkill.Name)</h4>
+                        </div>
+                        <div class="job-group">
+                            <h4 class="subfield--subtitle">Rating: @Html.DisplayFor(model => model.ApplicationSkill.Rating)</h4>
+                        </div>
+                        <div class="job-group">
+                            <h4 class="job-description">Description(optional): @Html.Raw("<pre>" + Html.Encode(Model.ApplicationSkill.Description) + "</pre>")</h4>
+                        </div>
+                    </div>
+                }
+            }
+            @{
+                if (Model.OtherNotes != null)
+                {
+                    <div>
+                        <h3 class="subfield--subfield">Other notes made by the candidate</h3>
+                        <div class="job-group">
+                            <h4 class="job-description">Other notes: <pre>@Html.Encode(Model.OtherNotes)</pre></h4>
+                        </div>
+                    </div>
+                }
+            }
+            <div class="job-group">
+                <h4 class="job-applicationstatus">Application status: @Html.DisplayFor(model => model.Status)</h4>
+            </div>
+        </div>
+        <div class="job-metadata">
+            <div class="job-group">
+                <h4 class="job-written-at">Application written at: @Html.DisplayFor(model => model.ApplicationWrittenAt)</h4>
+            </div>
+        </div>
+        <div class="job-actions">
+            @{
+                if (User.IsInRole("candidate"))
+                {
+                    <div>
+                        <a class="btl-anchor text-align-left" asp-controller="AccountManager" asp-action="Profile">Back to Profile</a>
+                    </div>
+                }
+                if (User.IsInRole("hr"))
+                {
+                    <div>
+                        <form asp-action="ModifyApplicationStatus">
+                            <label for="@Model.Status">Modify application status</label>
+                            <input type="hidden" asp-for="Application.ApplicationId" />
+                            <select class="form-control" asp-for="Application.Status" asp-items="ViewBag.ApplicationStatuses"></select>
+                            <button type="submit">Modify</button>
+                        </form>
+                    </div>
+                    <div>
+                        <a class="btl-anchor text-align-left" asp-action="Index">Back to List</a>
+                    </div>
+                }
+            }
+        </div>
+    </div>
+</div>
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

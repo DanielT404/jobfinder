@@ -1,0 +1,41 @@
+﻿@model JobFinder.Models.JobListing
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="read-section">
+        <div class="job-overview">
+            <div class="job-group">
+                <h4 class="job-company">@Html.DisplayFor(model => model.Company.Name)</h4>
+                <p class="job-desc">@Html.DisplayFor(model => model.Company.Description)</p>
+            </div>
+            <div class="job-group">
+                <h4 class="job-category">@Html.DisplayFor(model => model.Category.Name)</h4>
+            </div>
+            <div class="job-group">
+                <h4 class="job-title">@Html.DisplayFor(model => model.Title)</h4>
+            </div>
+            <div class="job-group">
+                <h4 class="job-position">@Html.DisplayFor(model => model.Position)</h4>
+            </div>
+            <div class="job-group">
+                <h4 class="job-info">@Html.DisplayFor(model => model.Type) - @Html.DisplayFor(model => model.Region), @Html.DisplayFor(model => model.Location) </h4>
+            </div>
+            <div class="job-group">
+                <div class="job-description">@Html.Raw("<pre>" + Html.Encode(Model.Description) + "</pre>")</div>
+            </div>
+        </div>
+        <div class="job-metadata">
+            <div class="job-group">
+                <h4 class="job-added-at">Added at: @Html.DisplayFor(model => model.JobListingAddedAt)</h4>
+            </div>
+        </div>
+        <div class="job-actions">
+            <a class="btn btn-apply" href="/jobs/@Html.DisplayFor(model => model.JobListingId)/apply">Apply</a>
+            <div>
+                <a class="btl-anchor text-align-left" asp-action="Index">Back to List</a>
+            </div>
+        </div>
+    </div>

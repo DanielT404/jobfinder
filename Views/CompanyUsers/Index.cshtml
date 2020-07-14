@@ -1,0 +1,64 @@
+﻿@model IEnumerable<JobFinder.Models.CompanyUser>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="read-section">
+        <h1>Current users assigned to companies</h1>
+
+        <p>
+            <a asp-action="Create">Assign new user to company</a>
+        </p>
+        <div>
+            <a class="btl-anchor" asp-action="Index" asp-controller="Dashboard">Back to dashboard</a>
+        </div>
+        @if (Model.Count() > 0)
+        {
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>
+                            User First Name
+                        </th>
+                        <th>
+                            User Last Name
+                        </th>
+                        <th>
+                            User Email
+                        </th>
+                        <th>
+                            User's company
+                        </th>
+                        <th></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.JobFinderUser.FirstName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.JobFinderUser.LastName)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.JobFinderUser.Email)
+                            </td>
+                            <td>
+                                @Html.DisplayFor(modelItem => item.Company.Name)
+                            </td>
+                            <td>
+                                @Html.ActionLink("Unassign", "Delete", new { userId = item.UserId, companyId = item.CKCompanyId })
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        }
+        else {
+            <p class="no-entries__message">No users are assigned currently to companies.</p>
+        } 
+    </div>

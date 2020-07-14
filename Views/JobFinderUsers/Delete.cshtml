@@ -1,0 +1,16 @@
+﻿@model JobFinder.Models.JobFinderUser
+
+@{
+    ViewData["Title"] = "Delete User";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+    <div class="delete-section">
+        <h1>Are you sure you want to disable user "@Model.FirstName @Model.LastName", having as email address "@Model.Email" ? This operation will not allow the user to authenticate into the platform anymore.</h1>
+
+        <form asp-action="Delete">
+            <input type="hidden" asp-for="UserId" />
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            <a asp-action="Index">Back to List</a>
+        </form>
+    </div>

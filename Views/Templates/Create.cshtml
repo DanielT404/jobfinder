@@ -1,0 +1,39 @@
+﻿@model JobFinder.Models.ViewModels.Admin.JobListingTemplateViewModel
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="form-crud">
+    <h2>Add template to job listing</h2>
+    <form asp-action="Create">
+        <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+        <div class="form-group">
+            <label asp-for="WorkExperience" class="control-label"></label>
+            <input asp-for="WorkExperience" class="form-control">
+        </div>
+        <div class="form-group">
+            <label asp-for="Education" class="control-label"></label>
+            <input asp-for="Education" class="form-control">
+        </div>
+        <div class="form-group">
+            <label asp-for="Skills" class="control-label"></label>
+            <input asp-for="Skills" class="form-control">
+        </div>
+        <div class="form-group">
+            <label asp-for="OtherNotes" class="control-label"></label>
+            <input asp-for="OtherNotes" class="form-control">
+        </div>
+        <div class="form-group">
+            <input type="submit" value="Save" class="btn btn-primary" />
+        </div>
+        <div>
+            <a class="btl-anchor" asp-action="Index" asp-controller="JobListings">Back to List</a>
+        </div>
+    </form>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

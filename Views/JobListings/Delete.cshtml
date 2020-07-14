@@ -1,0 +1,24 @@
+﻿@model JobFinder.Models.JobListing
+
+@{
+    ViewData["Title"] = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+    <div class="delete-section">
+        <h1>Are you sure you want to delete job listing for @Model.Company.Name, having as:</h1>
+        <ul>
+            <li>Job listing title: @Model.Title</li>
+            <li>Job listing position: @Model.Position</li>
+            <li>Job listing region: @Model.Region</li>
+            <li>Job listing location: @Model.Location</li>
+            <li>Job listing category: @Model.Category.Name</li>
+        </ul>
+
+        <form asp-action="Delete" class="form-delete">
+            <input type="hidden" asp-for="JobListingId" />
+            <input type="submit" value="Delete" class="btn btn-danger" /> |
+            <a asp-action="Index">Back to List</a>
+        </form>
+    </div>
